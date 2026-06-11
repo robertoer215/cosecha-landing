@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>COSECHA — Alimentación inteligente que transforma tu bienestar</title>
+<meta name="description" content="Fast casual saludable en Puebla. Platillos de alta cocina con macros calculados para tu objetivo. Tú entrenas, nosotros medimos.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAFAF8;
+    --surface:#F4F2EE;
+    --ink:#1A1A18;
+    --ink-soft:#44423E;
+    --muted:#8A8680;
+    --border:#E2DDD6;
+    --border-strong:#C8C0B4;
+    --tile:#C05A1F;          /* naranja azulejo — CTA y highlights únicamente */
+    --tile-bright:#D96E2B;   /* azulejo iluminado — solo dentro del motivo de retícula */
+    --tile-deep:#A84A15;     /* acento sobre fondo claro (texto) */
+    --concrete:#232220;      /* concreto de noche — footer y bloques oscuros */
+    --green:#3A7D6E;         /* semántico: proteína/éxito en datos */
+    --amber:#C07A1F;         /* semántico: carbohidratos en datos */
+    --display:'Archivo',sans-serif;
+    --body:'Inter',sans-serif;
+    --max:1200px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{animation:none!important;transition:none!important}
+  }
+  body{
+    font-family:var(--body);
+    background:var(--bg);
+    color:var(--ink);
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block}
+  a{color:inherit}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+
+  /* ---------- tipografía display: brutalista expandida ---------- */
+  .display{
+    font-family:var(--display);
+    font-variation-settings:'wdth' 118,'wght' 800;
+    text-transform:uppercase;
+    letter-spacing:-0.01em;
+    line-height:.95;
+    text-wrap:balance;
+  }
+  .eyebrow{
+    font-family:var(--display);
+    font-variation-settings:'wdth' 110,'wght' 600;
+    text-transform:uppercase;
+    font-size:13px;
+    letter-spacing:.14em;
+    color:var(--tile-deep);
+  }
+
+  /* ---------- botones: bloques duros, sin píldoras ---------- */
+  .btn{
+    display:inline-block;
+    font-family:var(--display);
+    font-variation-settings:'wdth' 110,'wght' 700;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    font-size:15px;
+    text-decoration:none;
+    padding:16px 36px;
+    border:2px solid var(--ink);
+    cursor:pointer;
+    transition:background .2s ease,color .2s ease,transform .15s ease;
+  }
+  .btn:active{transform:scale(.98)}
+  .btn-primary{background:var(--tile);border-color:var(--tile);color:#fff}
+  .btn-primary:hover{background:var(--tile-deep);border-color:var(--tile-deep)}
+  .btn-ghost{background:transparent;color:var(--ink)}
+  .btn-ghost:hover{background:var(--ink);color:var(--bg)}
+  .btn:focus-visible{outline:3px solid var(--tile);outline-offset:3px}
+
+  /* ---------- nav ---------- */
+  header{
+    position:sticky;top:0;z-index:100;
+    background:rgba(250,250,248,.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .logo{
+    font-family:var(--display);
+    font-variation-settings:'wdth' 122,'wght' 900;
+    font-size:22px;letter-spacing:.02em;text-decoration:none;
+  }
+  .logo span{color:var(--tile)}
+  .nav-links{display:flex;gap:32px;align-items:center;list-style:none}
+  .nav-links a{
+    text-decoration:none;font-size:14px;font-weight:500;color:var(--ink-soft);
+    transition:color .2s;
+  }
+  .nav-links a:hover{color:var(--tile-deep)}
+  .nav .btn{padding:10px 22px;font-size:13px}
+  .menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:8px}
+  .menu-toggle svg{display:block}
+
+  /* ---------- hero ---------- */
+  .hero{padding:88px 0 0;overflow:hidden}
+  .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+  .hero h1{font-size:clamp(44px,6.5vw,84px)}
+  .hero h1 .hl{color:var(--tile)}
+  .hero p{font-size:19px;color:var(--ink-soft);max-width:46ch;margin:28px 0 36px;text-wrap:pretty}
+  .hero-ctas{display:flex;gap:16px;flex-wrap:wrap}
+  .hero-meta{
+    display:flex;gap:28px;margin-top:48px;padding-top:24px;
+    border-top:1px solid var(--border);
+  }
+  .hero-meta div strong{
+    font-family:var(--display);
+    font-variation-settings:'wdth' 115,'wght' 800;
+    display:block;font-size:26px;
+  }
+  .hero-meta div span{font-size:13px;color:var(--muted)}
+
+  /* el mosaico hero: retícula de azulejos que respira */
+  .tile-mosaic{
+    aspect-ratio:4/5;
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    grid-template-rows:repeat(7,1fr);
+    gap:6px;
+    padding:6px;
+    background:var(--concrete);
+  }
+  .tile-mosaic i{background:var(--tile);transition:opacity .6s ease}
+  .tile-mosaic i:nth-child(3n){background:var(--tile-bright)}
+  .tile-mosaic i:nth-child(7n){background:var(--tile-deep)}
+  .tile-mosaic i.off{background:var(--concrete)}
+  .tile-mosaic .window{
+    grid-column:2/6;grid-row:2/6;
+    background:var(--surface);
+    overflow:hidden;
+  }
+  .tile-mosaic .window img{width:100%;height:100%;object-fit:cover}
+
+  /* ---------- cinta marquee ---------- */
+  .belt{
+    background:var(--concrete);color:var(--bg);
+    padding:14px 0;overflow:hidden;white-space:nowrap;
+  }
+  .belt-track{display:inline-block;animation:belt 28s linear infinite}
+  .belt span{
+    font-family:var(--display);
+    font-variation-settings:'wdth' 115,'wght' 700;
+    text-transform:uppercase;font-size:15px;letter-spacing:.1em;
+    margin:0 28px;
+  }
+  .belt b{color:var(--tile-bright);font-weight:inherit}
+  @keyframes belt{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* ---------- secciones ---------- */
+  section{padding:104px 0}
+  .sec-head{max-width:680px;margin-bottom:64px}
+  .sec-head h2{font-size:clamp(32px,4.2vw,54px);margin:14px 0 18px}
+  .sec-head p{font-size:18px;color:var(--ink-soft);text-wrap:pretty}
+
+  /* cómo funciona */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border-strong)}
+  .step{background:var(--bg);padding:40px 32px}
+  .step .num{
+    font-family:var(--display);
+    font-variation-settings:'wdth' 120,'wght' 900;
+    font-size:48px;color:var(--tile);line-height:1;
+  }
+  .step h3{
+    font-family:var(--display);
+    font-variation-settings:'wdth' 112,'wght' 700;
+    text-transform:uppercase;font-size:18px;letter-spacing:.04em;
+    margin:20px 0 10px;
+  }
+  .step p{font-size:15px;color:var(--ink-soft)}
+
+  /* menú modular */
+  .menu-sec{background:var(--surface)}
+  .mod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  .mod{
+    background:var(--bg);
+    border:1px solid var(--border);
+    padding:28px 24px;
+    display:flex;flex-direction:column;
+    transition:border-color .2s ease,transform .2s ease;
+  }
+  .mod:hover{border-color:var(--tile);transform:translateY(-4px)}
+  .mod .mod-tag{
+    align-self:flex-start;
+    font-family:var(--display);
+    font-variation-settings:'wdth' 110,'wght' 700;
+    text-transform:uppercase;font-size:11px;letter-spacing:.12em;
+    background:var(--ink);color:var(--bg);
+    padding:5px 10px;margin-bottom:20px;
+  }
+  .mod.featured .mod-tag{background:var(--tile)}
+  .mod ul{list-style:none;display:flex;flex-direction:column;gap:14px}
+  .mod li{font-size:15px;line-height:1.45;padding-left:18px;position:relative}
+  .mod li::before{
+    content:"";position:absolute;left:0;top:8px;
+    width:8px;height:8px;background:var(--tile);
+  }
+  .menu-note{margin-top:36px;font-size:14px;color:var(--muted);max-width:60ch}
+
+  /* ---------- app / macros ---------- */
+  .app-sec .app-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+  .macro-rows{display:flex;flex-direction:column;gap:22px;margin:36px 0}
+  .macro-row .macro-label{
+    display:flex;justify-content:space-between;
+    font-size:14px;font-weight:600;margin-bottom:8px;
+  }
+  .macro-row .macro-label span:last-child{
+    font-variant-numeric:tabular-nums;color:var(--ink-soft);font-weight:500;
+  }
+  /* la firma: barras de macros que se llenan como azulejos */
+  .tile-bar{display:grid;grid-template-columns:repeat(20,1fr);gap:3px}
+  .tile-bar i{
+    aspect-ratio:1;
+    background:var(--border);
+    transition:background .25s ease;
+  }
+  .tile-bar i.fill{background:var(--tile)}
+  .tile-bar[data-color="green"] i.fill{background:var(--green)}
+  .tile-bar[data-color="amber"] i.fill{background:var(--amber)}
+
+  .phone{
+    justify-self:center;
+    width:min(340px,86%);
+    background:var(--concrete);
+    border:3px solid var(--ink);
+    padding:18px;
+    box-shadow:16px 16px 0 var(--tile);
+  }
+  .phone .screen{background:var(--bg);padding:24px 20px}
+  .phone .screen .ph-logo{
+    font-family:var(--display);
+    font-variation-settings:'wdth' 122,'wght' 900;
+    font-size:17px;
+  }
+  .phone .screen .ph-goal{
+    font-size:12px;color:var(--muted);margin:2px 0 20px;
+  }
+  .phone .screen .ph-kcal{
+    font-family:var(--display);
+    font-variation-settings:'wdth' 115,'wght' 800;
+    font-size:34px;line-height:1;
+    margin-bottom:4px;
+  }
+  .phone .screen .ph-kcal-lbl{font-size:11px;color:var(--muted);margin-bottom:22px}
+  .phone .macro-rows{gap:16px;margin:0 0 22px}
+  .phone .macro-label{font-size:12px}
+  .phone .ph-cta{
+    display:block;text-align:center;text-decoration:none;
+    background:var(--tile);color:#fff;
+    font-family:var(--display);
+    font-variation-settings:'wdth' 110,'wght' 700;
+    text-transform:uppercase;font-size:12px;letter-spacing:.08em;
+    padding:13px;
+  }
+
+  /* ---------- el lugar ---------- */
+  .place-sec{background:var(--concrete);color:var(--bg)}
+  .place-sec .eyebrow{color:var(--tile-bright)}
+  .place-sec .sec-head p{color:#B8B2AA}
+  .place-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:20px}
+  .place-grid figure{position:relative;overflow:hidden;border:1px solid #3a3835}
+  .place-grid img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/3}
+  .place-grid figure.tall img{aspect-ratio:3/4}
+  .place-grid figcaption{
+    position:absolute;left:0;bottom:0;
+    background:var(--concrete);color:var(--bg);
+    font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+    padding:8px 14px;
+  }
+  .place-facts{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:2px;
+    background:#3a3835;margin-top:20px;
+  }
+  .place-facts div{background:var(--concrete);padding:24px}
+  .place-facts strong{
+    font-family:var(--display);
+    font-variation-settings:'wdth' 112,'wght' 700;
+    text-transform:uppercase;font-size:14px;letter-spacing:.05em;
+    display:block;margin-bottom:6px;color:var(--tile-bright);
+  }
+  .place-facts span{font-size:13px;color:#B8B2AA}
+
+  /* ---------- CTA final ---------- */
+  .final{
+    text-align:center;
+    padding:120px 24px;
+    border-top:6px solid var(--tile);
+  }
+  .final h2{font-size:clamp(36px,5vw,64px);max-width:18ch;margin:0 auto 20px}
+  .final p{font-size:18px;color:var(--ink-soft);margin-bottom:40px}
+
+  /* ---------- footer ---------- */
+  footer{background:var(--concrete);color:#B8B2AA;padding:56px 0 32px}
+  .foot-grid{display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap;margin-bottom:48px}
+  footer .logo{color:var(--bg)}
+  .foot-grid nav{display:flex;gap:28px}
+  .foot-grid nav a{text-decoration:none;font-size:14px}
+  .foot-grid nav a:hover{color:var(--tile-bright)}
+  .foot-base{
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
+    border-top:1px solid #3a3835;padding-top:24px;font-size:12px;
+  }
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:960px){
+    .hero-grid,.app-sec .app-grid,.place-grid{grid-template-columns:1fr}
+    .steps{grid-template-columns:1fr}
+    .mod-grid{grid-template-columns:repeat(2,1fr)}
+    .tile-mosaic{max-width:440px;margin:0 auto}
+    .phone{margin-top:16px}
+    section{padding:72px 0}
+  }
+  @media (max-width:640px){
+    .nav-links{
+      display:none;
+      position:absolute;top:68px;left:0;right:0;
+      background:var(--bg);border-bottom:1px solid var(--border);
+      flex-direction:column;padding:24px;gap:20px;
+    }
+    .nav-links.open{display:flex}
+    .menu-toggle{display:block}
+    .mod-grid{grid-template-columns:1fr}
+    .hero{padding-top:56px}
+    .hero-meta{flex-wrap:wrap;gap:18px}
+    .place-facts{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#">COSECHA<span>.</span></a>
+    <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <ul class="nav-links">
+      <li><a href="#como">Cómo funciona</a></li>
+      <li><a href="#menu">Menú</a></li>
+      <li><a href="#app">App</a></li>
+      <li><a href="#lugar">El lugar</a></li>
+      <li><a class="btn btn-primary" href="https://robertoer215.github.io/cosecha-macro-calculator/">Arma tu plato</a></li>
+    </ul>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">Fast casual · Puebla, México</p>
+        <h1 class="display" style="margin-top:16px">Come rico.<br>Avanza <span class="hl">exacto</span>.</h1>
+        <p>Alta cocina mexicana con porciones y macros calculados para tu objetivo. Tú entrenas y vives; nosotros pesamos, medimos y cocinamos. Sin contar calorías. Sin sacrificar sabor.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="https://robertoer215.github.io/cosecha-macro-calculator/">Arma tu plato</a>
+          <a class="btn btn-ghost" href="#menu">Ver el menú</a>
+        </div>
+        <div class="hero-meta">
+          <div><strong>±5 g</strong><span>precisión por macro</span></div>
+          <div><strong>4</strong><span>módulos por plato</span></div>
+          <div><strong>0</strong><span>calorías que contar tú</span></div>
+        </div>
+      </div>
+      <div class="tile-mosaic" aria-hidden="true" id="mosaic">
+        <div class="window"><img src="assets/cocina-1.png" alt="" loading="eager"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CINTA -->
+  <div class="belt" aria-hidden="true">
+    <div class="belt-track">
+      <span>Proteína <b>·</b> Vegetal <b>·</b> Carbohidrato <b>·</b> Grasa buena <b>·</b></span>
+      <span>Salmón al pastor <b>·</b> Tenderloin al mole verde <b>·</b> Pollo al cilantro <b>·</b></span>
+      <span>Proteína <b>·</b> Vegetal <b>·</b> Carbohidrato <b>·</b> Grasa buena <b>·</b></span>
+      <span>Salmón al pastor <b>·</b> Tenderloin al mole verde <b>·</b> Pollo al cilantro <b>·</b></span>
+    </div>
+  </div>
+
+  <!-- CÓMO FUNCIONA -->
+  <section id="como">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">Cómo funciona</p>
+        <h2 class="display">Tu objetivo, traducido a gramos</h2>
+        <p>Tres pasos entre tu meta y tu plato. La inteligencia está en la cocina, no en tu cabeza.</p>
+      </div>
+      <div class="steps reveal">
+        <div class="step">
+          <div class="num">01</div>
+          <h3>Registra tu perfil</h3>
+          <p>Peso, estatura, actividad y objetivo: perder grasa, ganar músculo o rendir más. Dos minutos, una sola vez.</p>
+        </div>
+        <div class="step">
+          <div class="num">02</div>
+          <h3>La IA calcula</h3>
+          <p>Tu perfil se convierte en calorías y macros exactos por comida. Cada plato del menú se ajusta a tus números en tiempo real.</p>
+        </div>
+        <div class="step">
+          <div class="num">03</div>
+          <h3>La cocina ejecuta</h3>
+          <p>Gramajes precisos en cocina abierta con sistema modular. Ves tu plato armarse frente a ti, al gramo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENÚ MODULAR -->
+  <section id="menu" class="menu-sec">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">Menú modular</p>
+        <h2 class="display">Cuatro módulos. Un plato tuyo.</h2>
+        <p>Cocina mexicana contemporánea en piezas que se combinan. Elige uno de cada módulo — o deja que tu objetivo elija por ti.</p>
+      </div>
+      <div class="mod-grid reveal">
+        <div class="mod featured">
+          <span class="mod-tag">Proteína</span>
+          <ul>
+            <li>Salmón al pastor</li>
+            <li>Tenderloin al mole verde</li>
+            <li>Pollo al cilantro</li>
+          </ul>
+        </div>
+        <div class="mod">
+          <span class="mod-tag">Vegetal</span>
+          <ul>
+            <li>Brócoli asado sobre tzatziki</li>
+            <li>Verduras tatemadas con salsa de cacahuate</li>
+            <li>Espárragos asados</li>
+          </ul>
+        </div>
+        <div class="mod">
+          <span class="mod-tag">Carbohidrato</span>
+          <ul>
+            <li>Patatas asadas</li>
+            <li>Tortillas amarilla, azul y morada</li>
+            <li>Arroz con edamame y granada</li>
+            <li>Esquites con yogur griego y feta</li>
+          </ul>
+        </div>
+        <div class="mod">
+          <span class="mod-tag">Grasa buena</span>
+          <ul>
+            <li>Guacamole</li>
+            <li>Nueces tostadas</li>
+            <li>Semillas de girasol</li>
+            <li>Mantequilla</li>
+          </ul>
+        </div>
+      </div>
+      <p class="menu-note">Cada módulo se sirve en la porción exacta que tu perfil pide. El mismo plato sabe igual de bien con 120 g o con 220 g de proteína — solo cambia lo que tu cuerpo necesita.</p>
+    </div>
+  </section>
+
+  <!-- APP -->
+  <section id="app" class="app-sec">
+    <div class="wrap app-grid">
+      <div class="reveal">
+        <p class="eyebrow">El cerebro</p>
+        <h2 class="display" style="font-size:clamp(32px,4.2vw,54px);margin:14px 0 18px">Tus macros, en vivo y al gramo</h2>
+        <p style="color:var(--ink-soft);font-size:18px">Mientras armas tu plato, la app muestra cómo cada módulo mueve tus números. Agrega guacamole y ve subir las grasas. Cambia tortilla por arroz y mira el ajuste al instante. Coaching nutricional pasivo: sin esfuerzo, sin culpa, sin hojas de cálculo.</p>
+        <div class="macro-rows" aria-label="Ejemplo de progreso de macros">
+          <div class="macro-row">
+            <div class="macro-label"><span>Proteína</span><span>42 / 48 g</span></div>
+            <div class="tile-bar" data-color="green" data-fill="17"></div>
+          </div>
+          <div class="macro-row">
+            <div class="macro-label"><span>Carbohidrato</span><span>55 / 70 g</span></div>
+            <div class="tile-bar" data-color="amber" data-fill="15"></div>
+          </div>
+          <div class="macro-row">
+            <div class="macro-label"><span>Grasa</span><span>18 / 22 g</span></div>
+            <div class="tile-bar" data-fill="16"></div>
+          </div>
+        </div>
+        <a class="btn btn-primary" href="https://robertoer215.github.io/cosecha-macro-calculator/">Prueba la calculadora</a>
+      </div>
+      <div class="phone reveal" role="img" aria-label="Vista previa de la app COSECHA mostrando progreso de macros">
+        <div class="screen">
+          <div class="ph-logo">COSECHA<span style="color:var(--tile)">.</span></div>
+          <div class="ph-goal">Objetivo: ganar músculo</div>
+          <div class="ph-kcal">1,840 / 2,400</div>
+          <div class="ph-kcal-lbl">KCAL DE HOY</div>
+          <div class="macro-rows">
+            <div class="macro-row">
+              <div class="macro-label"><span>Proteína</span><span>132 g</span></div>
+              <div class="tile-bar" data-color="green" data-fill="15"></div>
+            </div>
+            <div class="macro-row">
+              <div class="macro-label"><span>Carbos</span><span>198 g</span></div>
+              <div class="tile-bar" data-color="amber" data-fill="13"></div>
+            </div>
+            <div class="macro-row">
+              <div class="macro-label"><span>Grasas</span><span>61 g</span></div>
+              <div class="tile-bar" data-fill="14"></div>
+            </div>
+          </div>
+          <a class="ph-cta" href="https://robertoer215.github.io/cosecha-macro-calculator/">Armar mi siguiente plato</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EL LUGAR -->
+  <section id="lugar" class="place-sec">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">El lugar</p>
+        <h2 class="display">Brutalismo mexicano, cocina abierta</h2>
+        <p>Concreto crudo, azulejo naranja y fuego a la vista. Un espacio inspirado en la costa de Oaxaca: lujoso sin adornos, deportivo sin gimnasio, mexicano sin cliché.</p>
+      </div>
+      <div class="place-grid reveal">
+        <figure>
+          <img src="assets/cocina-2.png" alt="Cocina abierta de COSECHA: isla de azulejo naranja bajo campana de concreto expuesto" loading="lazy">
+          <figcaption>Cocina abierta · isla de azulejo</figcaption>
+        </figure>
+        <figure class="tall">
+          <img src="assets/arquitectura.png" alt="Arquitectura brutalista de concreto cálido con celosías de madera, inspiración Puerto Escondido" loading="lazy">
+          <figcaption>Inspiración · costa oaxaqueña</figcaption>
+        </figure>
+      </div>
+      <div class="place-facts reveal">
+        <div><strong>Cocina central</strong><span>El show es ver tu plato armarse al gramo, frente a ti.</span></div>
+        <div><strong>Concreto + azulejo</strong><span>Materiales honestos: nada que esconder, igual que el menú.</span></div>
+        <div><strong>Angelópolis 2027</strong><span>Primera sede en Puebla. Después, México.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="final">
+    <p class="eyebrow">Empieza hoy</p>
+    <h2 class="display">Tu objetivo ya tiene cocina</h2>
+    <p>Calcula tus macros y arma tu primer plato en menos de tres minutos.</p>
+    <a class="btn btn-primary" href="https://robertoer215.github.io/cosecha-macro-calculator/">Arma tu plato</a>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="logo" href="#">COSECHA<span>.</span></a>
+        <p style="font-size:13px;max-width:32ch;margin-top:12px">Alimentación inteligente que transforma tu bienestar.</p>
+      </div>
+      <nav aria-label="Pie de página">
+        <a href="#como">Cómo funciona</a>
+        <a href="#menu">Menú</a>
+        <a href="#app">App</a>
+        <a href="#lugar">El lugar</a>
+      </nav>
+    </div>
+    <div class="foot-base">
+      <span>© 2026 COSECHA · Puebla, México</span>
+      <span>Hecho con fuego y concreto</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // mosaico hero: genera azulejos alrededor de la ventana de foto
+  (function(){
+    const m = document.getElementById('mosaic');
+    if(!m) return;
+    const total = 6*7;
+    const frag = document.createDocumentFragment();
+    for(let i=0;i<total;i++){
+      const r = Math.floor(i/6)+1, c = (i%6)+1;
+      if(r>=2 && r<=5 && c>=2 && c<=5) continue; // hueco de la ventana
+      const t = document.createElement('i');
+      if(Math.random()<.18) t.classList.add('off'); // azulejos apagados, textura
+      frag.appendChild(t);
+    }
+    m.appendChild(frag);
+  })();
+
+  // barras de macros tipo azulejo
+  document.querySelectorAll('.tile-bar').forEach(bar=>{
+    const fill = parseInt(bar.dataset.fill,10) || 0;
+    for(let i=0;i<20;i++){
+      const t = document.createElement('i');
+      if(i<fill) t.dataset.f = '1';
+      bar.appendChild(t);
+    }
+  });
+
+  // reveal + animación de llenado al entrar en viewport
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      e.target.classList.add('in');
+      e.target.querySelectorAll('.tile-bar').forEach(bar=>{
+        const tiles = bar.querySelectorAll('i[data-f]');
+        tiles.forEach((t,i)=>{
+          if(reduce){ t.classList.add('fill'); }
+          else setTimeout(()=>t.classList.add('fill'), i*45);
+        });
+      });
+      io.unobserve(e.target);
+    });
+  },{threshold:.2});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  // barras fuera de .reveal (teléfono ya es .reveal, hero no tiene barras)
+
+  // nav móvil
+  const toggle = document.querySelector('.menu-toggle');
+  const links = document.querySelector('.nav-links');
+  toggle.addEventListener('click',()=>{
+    const open = links.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open);
+  });
+  links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+    links.classList.remove('open');
+    toggle.setAttribute('aria-expanded','false');
+  }));
+</script>
+</body>
+</html>
