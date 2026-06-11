@@ -183,6 +183,11 @@
     transition:border-color .2s ease;
   }
   .mod:hover{border-color:var(--parchment)}
+  .mod-photo{
+    border-radius:12px;overflow:hidden;
+    margin:-8px -8px 0;
+  }
+  .mod-photo img{width:100%;aspect-ratio:1;object-fit:cover}
   .mod-top{display:flex;gap:8px;align-items:center}
   .badge{
     border-radius:9999px;font-size:12px;font-weight:500;letter-spacing:-0.24px;
@@ -373,7 +378,7 @@
         </div>
       </div>
       <div class="hero-photo reveal">
-        <img src="assets/cocina-1.png" alt="Cocina abierta de COSECHA: isla de azulejo naranja bajo campana de concreto" loading="eager">
+        <img src="assets/hero-bowl.jpg" alt="Bowl COSECHA con pollo al pastor, esquites, vegetales tatemados y tortilla azul sobre fondo pergamino" loading="eager">
       </div>
     </div>
   </section>
@@ -424,6 +429,7 @@
       </div>
       <div class="mod-grid reveal">
         <div class="mod">
+          <div class="mod-photo"><img src="assets/mod-tenderloin.jpg" alt="Tenderloin al mole verde con pepitas sobre plato artesanal" loading="lazy"></div>
           <div class="mod-top"><span class="badge">Favorito</span><span class="code-pill">PR-01®</span></div>
           <h3>Proteína</h3>
           <ul>
@@ -434,6 +440,7 @@
           <a class="btn btn-light" href="https://robertoer215.github.io/cosecha-macro-calculator/">Elegir porción</a>
         </div>
         <div class="mod">
+          <div class="mod-photo"><img src="assets/mod-brocoli.jpg" alt="Brócoli asado sobre tzatziki cremoso" loading="lazy"></div>
           <div class="mod-top"><span class="code-pill">VG-02®</span></div>
           <h3>Vegetal</h3>
           <ul>
@@ -444,6 +451,7 @@
           <a class="btn btn-light" href="https://robertoer215.github.io/cosecha-macro-calculator/">Elegir porción</a>
         </div>
         <div class="mod">
+          <div class="mod-photo"><img src="assets/mod-esquites.jpg" alt="Esquites con yogur griego, feta y limón" loading="lazy"></div>
           <div class="mod-top"><span class="code-pill">CB-03®</span></div>
           <h3>Carbohidrato</h3>
           <ul>
