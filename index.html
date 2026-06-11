@@ -206,6 +206,15 @@
     margin-top:40px;font-size:13px;font-weight:350;color:var(--sage);
     max-width:62ch;letter-spacing:-0.26px;
   }
+  .dish-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px}
+  .dish-gallery figure{border-radius:16px;overflow:hidden;border:1px solid rgba(252,250,245,.35)}
+  .dish-gallery img{width:100%;aspect-ratio:1;object-fit:cover}
+  .dish-gallery figcaption{
+    padding:14px 18px;font-size:14px;font-weight:400;letter-spacing:-0.28px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .dish-gallery figcaption .mono{font-size:10px;opacity:.65}
+  @media (max-width:640px){.dish-gallery{grid-template-columns:1fr}}
 
   /* ---------- app / macros ---------- */
   .app-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
@@ -378,7 +387,7 @@
         </div>
       </div>
       <div class="hero-photo reveal">
-        <img src="assets/hero-bowl.jpg" alt="Bowl COSECHA con pollo al pastor, esquites, vegetales tatemados y tortilla azul sobre fondo pergamino" loading="eager">
+        <img src="assets/hero-bowl.jpg" alt="Bowl COSECHA en plato de aluminio: salmón al pastor, frijol negro, esquites, pimientos tatemados y tortilla azul" loading="eager">
       </div>
     </div>
   </section>
@@ -429,7 +438,7 @@
       </div>
       <div class="mod-grid reveal">
         <div class="mod">
-          <div class="mod-photo"><img src="assets/mod-tenderloin.jpg" alt="Tenderloin al mole verde con pepitas sobre plato artesanal" loading="lazy"></div>
+          <div class="mod-photo"><img src="assets/mod-tenderloin.jpg" alt="Tenderloin término medio abanicado sobre mole verde con pepitas, en plato de aluminio" loading="lazy"></div>
           <div class="mod-top"><span class="badge">Favorito</span><span class="code-pill">PR-01®</span></div>
           <h3>Proteína</h3>
           <ul>
@@ -463,7 +472,7 @@
           <a class="btn btn-light" href="https://robertoer215.github.io/cosecha-macro-calculator/">Elegir porción</a>
         </div>
         <div class="mod">
-          <div class="mod-photo"><img src="assets/mod-guacamole.jpg" alt="Guacamole en molcajete con nueces tostadas y semillas de girasol" loading="lazy"></div>
+          <div class="mod-photo"><img src="assets/mod-guacamole.jpg" alt="Guacamole en bowl de aluminio con nueces tostadas y semillas regadas sobre acero" loading="lazy"></div>
           <div class="mod-top"><span class="code-pill">GR-04®</span></div>
           <h3>Grasa buena</h3>
           <ul>
@@ -474,6 +483,20 @@
           </ul>
           <a class="btn btn-light" href="https://robertoer215.github.io/cosecha-macro-calculator/">Elegir porción</a>
         </div>
+      </div>
+      <div class="dish-gallery reveal">
+        <figure>
+          <img src="assets/dish-salmon.jpg" alt="Salmón al pastor con costra de achiote y pico de piña tatemada, en plato de aluminio" loading="lazy">
+          <figcaption><span class="mono">PR-01®</span> Salmón al pastor</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/dish-pollo.jpg" alt="Pollo al cilantro en láminas con cebollitas tatemadas, en plato de aluminio" loading="lazy">
+          <figcaption><span class="mono">PR-01®</span> Pollo al cilantro</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/dish-verduras.jpg" alt="Verduras tatemadas sobre salsa macha de cacahuate, en plato de aluminio" loading="lazy">
+          <figcaption><span class="mono">VG-02®</span> Verduras tatemadas</figcaption>
+        </figure>
       </div>
       <p class="dark-note">Cada módulo se sirve en la porción exacta que tu perfil pide. El mismo plato sabe igual de bien con 120 g o con 220 g de proteína — solo cambia lo que tu cuerpo necesita.</p>
     </div>
