@@ -202,6 +202,17 @@
   .mod li{font-size:14px;font-weight:350;letter-spacing:-0.28px;line-height:1.45;color:var(--sage)}
   .mod li strong{color:var(--parchment);font-weight:400}
   .mod .btn{text-align:center;font-size:14px;padding:10px 20px}
+  .mod-toggle{
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    width:100%;font-family:var(--sans);
+  }
+  .mod-toggle svg{transition:transform .25s ease;flex:none}
+  .mod-toggle[aria-expanded="true"] svg{transform:rotate(180deg)}
+  .mod-list{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s ease}
+  .mod-list.open{grid-template-rows:1fr}
+  .mod-list-inner{overflow:hidden;display:flex;flex-direction:column;gap:14px;min-height:0}
+  .mod-list-inner ul{padding-top:4px}
+  .mod-list .link-arrow{font-size:14px;color:var(--ember);align-self:flex-start;margin-bottom:4px}
   .dark-note{
     margin-top:40px;font-size:13px;font-weight:350;color:var(--sage);
     max-width:62ch;letter-spacing:-0.26px;
@@ -412,50 +423,82 @@
       </div>
       <div class="mod-grid reveal">
         <div class="mod">
-          <div class="mod-photo"><img src="assets/mod-tenderloin-v3.jpg" alt="Tenderloin término medio abanicado sobre mole verde con pepitas, en plato de aluminio" loading="lazy"></div>
+          <div class="mod-photo"><img src="assets/mod-tenderloin-v3.jpg" alt="Ingredientes del módulo proteína: salmón, tenderloin y pollo sobre charola de aluminio" loading="lazy"></div>
           <div class="mod-top"><span class="badge">Favorito</span><span class="code-pill">PR-01®</span></div>
           <h3>Proteína</h3>
-          <ul>
-            <li><strong>Salmón al pastor</strong></li>
-            <li><strong>Tenderloin al mole verde</strong></li>
-            <li><strong>Pollo al cilantro</strong></li>
-          </ul>
-          <a class="btn btn-light" href="https://robertoer215.github.io/cosecha-macro-calculator/">Elegir porción</a>
+          <button class="btn btn-light mod-toggle" aria-expanded="false" aria-controls="list-pr01" data-label="Ver proteínas">
+            <span class="lbl">Ver proteínas</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="mod-list" id="list-pr01">
+            <div class="mod-list-inner">
+              <ul>
+                <li><strong>Salmón al pastor</strong></li>
+                <li><strong>Tenderloin al mole verde</strong></li>
+                <li><strong>Pollo al cilantro</strong></li>
+              </ul>
+              <a class="link-arrow" href="https://robertoer215.github.io/cosecha-macro-calculator/">Calcular mi porción →</a>
+            </div>
+          </div>
         </div>
         <div class="mod">
-          <div class="mod-photo"><img src="assets/mod-brocoli-v3.jpg" alt="Brócoli asado sobre tzatziki cremoso" loading="lazy"></div>
+          <div class="mod-photo"><img src="assets/mod-brocoli-v3.jpg" alt="Ingredientes del módulo vegetal: brócoli, espárragos, zanahorias y pimientos frescos" loading="lazy"></div>
           <div class="mod-top"><span class="code-pill">VG-02®</span></div>
           <h3>Vegetal</h3>
-          <ul>
-            <li><strong>Brócoli asado</strong> sobre tzatziki</li>
-            <li><strong>Verduras tatemadas</strong> con salsa de cacahuate</li>
-            <li><strong>Espárragos asados</strong></li>
-          </ul>
-          <a class="btn btn-light" href="https://robertoer215.github.io/cosecha-macro-calculator/">Elegir porción</a>
+          <button class="btn btn-light mod-toggle" aria-expanded="false" aria-controls="list-vg02" data-label="Ver vegetales">
+            <span class="lbl">Ver vegetales</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="mod-list" id="list-vg02">
+            <div class="mod-list-inner">
+              <ul>
+                <li><strong>Brócoli asado</strong> sobre tzatziki</li>
+                <li><strong>Verduras tatemadas</strong> con salsa de cacahuate</li>
+                <li><strong>Espárragos asados</strong></li>
+              </ul>
+              <a class="link-arrow" href="https://robertoer215.github.io/cosecha-macro-calculator/">Calcular mi porción →</a>
+            </div>
+          </div>
         </div>
         <div class="mod">
-          <div class="mod-photo"><img src="assets/mod-esquites-v3.jpg" alt="Esquites con yogur griego, feta y limón" loading="lazy"></div>
+          <div class="mod-photo"><img src="assets/mod-esquites-v3.jpg" alt="Ingredientes del módulo carbohidrato: tortillas de colores, papas, arroz y maíz" loading="lazy"></div>
           <div class="mod-top"><span class="code-pill">CB-03®</span></div>
           <h3>Carbohidrato</h3>
-          <ul>
-            <li><strong>Patatas asadas</strong></li>
-            <li><strong>Tortillas</strong> amarilla, azul y morada</li>
-            <li><strong>Arroz</strong> con edamame y granada</li>
-            <li><strong>Esquites</strong> con yogur griego y feta</li>
-          </ul>
-          <a class="btn btn-light" href="https://robertoer215.github.io/cosecha-macro-calculator/">Elegir porción</a>
+          <button class="btn btn-light mod-toggle" aria-expanded="false" aria-controls="list-cb03" data-label="Ver carbohidratos">
+            <span class="lbl">Ver carbohidratos</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="mod-list" id="list-cb03">
+            <div class="mod-list-inner">
+              <ul>
+                <li><strong>Patatas asadas</strong></li>
+                <li><strong>Tortillas</strong> amarilla, azul y morada</li>
+                <li><strong>Arroz</strong> con edamame y granada</li>
+                <li><strong>Esquites</strong> con yogur griego y feta</li>
+              </ul>
+              <a class="link-arrow" href="https://robertoer215.github.io/cosecha-macro-calculator/">Calcular mi porción →</a>
+            </div>
+          </div>
         </div>
         <div class="mod">
-          <div class="mod-photo"><img src="assets/mod-guacamole-v3.jpg" alt="Guacamole en bowl de aluminio con nueces tostadas y semillas regadas sobre acero" loading="lazy"></div>
+          <div class="mod-photo"><img src="assets/mod-guacamole-v3.jpg" alt="Ingredientes del módulo grasa buena: aguacates, nueces, semillas y mantequilla" loading="lazy"></div>
           <div class="mod-top"><span class="code-pill">GR-04®</span></div>
           <h3>Grasa buena</h3>
-          <ul>
-            <li><strong>Guacamole</strong></li>
-            <li><strong>Nueces tostadas</strong></li>
-            <li><strong>Semillas de girasol</strong></li>
-            <li><strong>Mantequilla</strong></li>
-          </ul>
-          <a class="btn btn-light" href="https://robertoer215.github.io/cosecha-macro-calculator/">Elegir porción</a>
+          <button class="btn btn-light mod-toggle" aria-expanded="false" aria-controls="list-gr04" data-label="Ver grasas buenas">
+            <span class="lbl">Ver grasas buenas</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="mod-list" id="list-gr04">
+            <div class="mod-list-inner">
+              <ul>
+                <li><strong>Guacamole</strong></li>
+                <li><strong>Nueces tostadas</strong></li>
+                <li><strong>Semillas de girasol</strong></li>
+                <li><strong>Mantequilla</strong></li>
+              </ul>
+              <a class="link-arrow" href="https://robertoer215.github.io/cosecha-macro-calculator/">Calcular mi porción →</a>
+            </div>
+          </div>
         </div>
       </div>
       <div class="dish-gallery reveal">
@@ -587,6 +630,16 @@
   // las barras dentro de columnas de texto (no .reveal) se llenan de inmediato
   document.querySelectorAll('.macro-rows').forEach(rows=>{
     if(!rows.closest('.reveal')) io.observe(rows);
+  });
+
+  // desplegar opciones de cada módulo del menú
+  document.querySelectorAll('.mod-toggle').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const list = document.getElementById(btn.getAttribute('aria-controls'));
+      const open = list.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open);
+      btn.querySelector('.lbl').textContent = open ? 'Ocultar' : btn.dataset.label;
+    });
   });
 
   // nav móvil
