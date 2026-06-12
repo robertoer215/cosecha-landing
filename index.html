@@ -202,17 +202,39 @@
   .mod li{font-size:14px;font-weight:350;letter-spacing:-0.28px;line-height:1.45;color:var(--sage)}
   .mod li strong{color:var(--parchment);font-weight:400}
   .mod .btn{text-align:center;font-size:14px;padding:10px 20px}
-  .mod-toggle{
+  .mod-open{
     display:flex;align-items:center;justify-content:center;gap:8px;
-    width:100%;font-family:var(--sans);
+    width:100%;font-family:var(--sans);margin-top:auto;
   }
-  .mod-toggle svg{transition:transform .25s ease;flex:none}
-  .mod-toggle[aria-expanded="true"] svg{transform:rotate(180deg)}
-  .mod-list{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s ease}
-  .mod-list.open{grid-template-rows:1fr}
-  .mod-list-inner{overflow:hidden;display:flex;flex-direction:column;gap:14px;min-height:0}
-  .mod-list-inner ul{padding-top:4px}
-  .mod-list .link-arrow{font-size:14px;color:var(--ember);align-self:flex-start;margin-bottom:4px}
+  .mod-open svg{flex:none;transition:transform .2s ease}
+  .mod-open:hover svg{transform:translateX(3px)}
+
+  /* ---------- modal de categoría ---------- */
+  dialog#menu-modal{
+    border:none;border-radius:32px;padding:0;
+    width:min(920px,calc(100vw - 32px));
+    max-height:calc(100dvh - 48px);
+    background:var(--parchment);color:var(--clay);
+  }
+  dialog#menu-modal::backdrop{background:rgba(26,14,4,.55);backdrop-filter:blur(4px)}
+  .modal-inner{padding:36px;overflow:auto;max-height:calc(100dvh - 48px)}
+  .modal-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:24px}
+  .modal-head .code-pill{border-color:var(--clay);color:var(--clay)}
+  .modal-head h3{font-weight:300;font-size:32px;letter-spacing:-0.8px;margin-top:10px}
+  .modal-close{
+    background:var(--stone);border:none;border-radius:9999px;
+    width:42px;height:42px;display:grid;place-items:center;
+    cursor:pointer;color:var(--clay);flex:none;
+    transition:background .2s ease;
+  }
+  .modal-close:hover{background:var(--ember)}
+  .modal-close:focus-visible{outline:2px solid var(--ember-dot);outline-offset:2px}
+  .modal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:16px}
+  .modal-grid figure{background:var(--stone);border-radius:16px;overflow:hidden}
+  .modal-grid img{width:100%;aspect-ratio:1;object-fit:cover}
+  .modal-grid figcaption{padding:12px 14px;font-size:13.5px;font-weight:500;letter-spacing:-0.27px}
+  .modal-foot{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:28px;flex-wrap:wrap}
+  .modal-foot p{font-size:15px;font-weight:350}
   .dark-note{
     margin-top:40px;font-size:13px;font-weight:350;color:var(--sage);
     max-width:62ch;letter-spacing:-0.26px;
@@ -426,79 +448,37 @@
           <div class="mod-photo"><img src="assets/grupo-proteina.jpg" alt="Ingredientes del módulo proteína: salmón, tenderloin y pollo sobre charola de aluminio" loading="lazy"></div>
           <div class="mod-top"><span class="badge">Favorito</span><span class="code-pill">PR-01®</span></div>
           <h3>Proteína</h3>
-          <button class="btn btn-light mod-toggle" aria-expanded="false" aria-controls="list-pr01" data-label="Ver proteínas">
-            <span class="lbl">Ver proteínas</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          <button class="btn btn-light mod-open" data-cat="pr" aria-haspopup="dialog">
+            <span>Ver proteínas</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </button>
-          <div class="mod-list" id="list-pr01">
-            <div class="mod-list-inner">
-              <ul>
-                <li><strong>Salmón al pastor</strong></li>
-                <li><strong>Tenderloin al mole verde</strong></li>
-                <li><strong>Pollo al cilantro</strong></li>
-              </ul>
-              <a class="link-arrow" href="https://robertoer215.github.io/cosecha-macro-calculator/">Calcular mi porción →</a>
-            </div>
-          </div>
         </div>
         <div class="mod">
           <div class="mod-photo"><img src="assets/grupo-vegetal.jpg" alt="Ingredientes del módulo vegetal: brócoli, espárragos, zanahorias y pimientos frescos" loading="lazy"></div>
           <div class="mod-top"><span class="code-pill">VG-02®</span></div>
           <h3>Vegetal</h3>
-          <button class="btn btn-light mod-toggle" aria-expanded="false" aria-controls="list-vg02" data-label="Ver vegetales">
-            <span class="lbl">Ver vegetales</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          <button class="btn btn-light mod-open" data-cat="vg" aria-haspopup="dialog">
+            <span>Ver vegetales</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </button>
-          <div class="mod-list" id="list-vg02">
-            <div class="mod-list-inner">
-              <ul>
-                <li><strong>Brócoli asado</strong> sobre tzatziki</li>
-                <li><strong>Verduras tatemadas</strong> con salsa de cacahuate</li>
-                <li><strong>Espárragos asados</strong></li>
-              </ul>
-              <a class="link-arrow" href="https://robertoer215.github.io/cosecha-macro-calculator/">Calcular mi porción →</a>
-            </div>
-          </div>
         </div>
         <div class="mod">
           <div class="mod-photo"><img src="assets/grupo-carbo.jpg" alt="Ingredientes del módulo carbohidrato: tortillas de colores, papas, arroz y maíz" loading="lazy"></div>
           <div class="mod-top"><span class="code-pill">CB-03®</span></div>
           <h3>Carbohidrato</h3>
-          <button class="btn btn-light mod-toggle" aria-expanded="false" aria-controls="list-cb03" data-label="Ver carbohidratos">
-            <span class="lbl">Ver carbohidratos</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          <button class="btn btn-light mod-open" data-cat="cb" aria-haspopup="dialog">
+            <span>Ver carbohidratos</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </button>
-          <div class="mod-list" id="list-cb03">
-            <div class="mod-list-inner">
-              <ul>
-                <li><strong>Patatas asadas</strong></li>
-                <li><strong>Tortillas</strong> amarilla, azul y morada</li>
-                <li><strong>Arroz</strong> con edamame y granada</li>
-                <li><strong>Esquites</strong> con yogur griego y feta</li>
-              </ul>
-              <a class="link-arrow" href="https://robertoer215.github.io/cosecha-macro-calculator/">Calcular mi porción →</a>
-            </div>
-          </div>
         </div>
         <div class="mod">
           <div class="mod-photo"><img src="assets/grupo-grasa.jpg" alt="Ingredientes del módulo grasa buena: aguacates, nueces, semillas y mantequilla" loading="lazy"></div>
           <div class="mod-top"><span class="code-pill">GR-04®</span></div>
           <h3>Grasa buena</h3>
-          <button class="btn btn-light mod-toggle" aria-expanded="false" aria-controls="list-gr04" data-label="Ver grasas buenas">
-            <span class="lbl">Ver grasas buenas</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          <button class="btn btn-light mod-open" data-cat="gr" aria-haspopup="dialog">
+            <span>Ver grasas buenas</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </button>
-          <div class="mod-list" id="list-gr04">
-            <div class="mod-list-inner">
-              <ul>
-                <li><strong>Guacamole</strong></li>
-                <li><strong>Nueces tostadas</strong></li>
-                <li><strong>Semillas de girasol</strong></li>
-                <li><strong>Mantequilla</strong></li>
-              </ul>
-              <a class="link-arrow" href="https://robertoer215.github.io/cosecha-macro-calculator/">Calcular mi porción →</a>
-            </div>
-          </div>
         </div>
       </div>
       <div class="dish-gallery reveal">
@@ -578,6 +558,25 @@
     <p>Calcula tus macros y arma tu primer plato en menos de tres minutos.</p>
     <a class="btn btn-primary" href="https://robertoer215.github.io/cosecha-macro-calculator/">Arma tu plato</a>
   </section>
+
+<dialog id="menu-modal" aria-labelledby="menu-modal-title">
+  <div class="modal-inner">
+    <div class="modal-head">
+      <div>
+        <span class="code-pill" id="menu-modal-code"></span>
+        <h3 id="menu-modal-title"></h3>
+      </div>
+      <button class="modal-close" aria-label="Cerrar ventana">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-grid" id="menu-modal-grid"></div>
+    <div class="modal-foot">
+      <p>¿Cuánto te toca a ti? Pruébalo con tu perfil.</p>
+      <a class="btn btn-primary" href="https://robertoer215.github.io/cosecha-macro-calculator/">Calcular</a>
+    </div>
+  </div>
+</dialog>
 </main>
 
 <footer>
@@ -632,15 +631,45 @@
     if(!rows.closest('.reveal')) io.observe(rows);
   });
 
-  // desplegar opciones de cada módulo del menú
-  document.querySelectorAll('.mod-toggle').forEach(btn=>{
+  // modal de categorías del menú
+  const MENU = {
+    pr: {code:'PR-01®', title:'Proteína', items:[
+      {img:'assets/plato-salmon.jpg', name:'Salmón al pastor'},
+      {img:'assets/plato-tenderloin.jpg', name:'Tenderloin al mole verde'},
+      {img:'assets/plato-pollo.jpg', name:'Pollo al cilantro'}
+    ]},
+    vg: {code:'VG-02®', title:'Vegetal', items:[
+      {img:'assets/mod-brocoli-v3.jpg', name:'Brócoli asado sobre tzatziki'},
+      {img:'assets/dish-verduras-v3.jpg', name:'Verduras tatemadas con salsa de cacahuate'},
+      {img:'assets/plato-esparragos.jpg', name:'Espárragos asados'}
+    ]},
+    cb: {code:'CB-03®', title:'Carbohidrato', items:[
+      {img:'assets/mod-esquites-v3.jpg', name:'Esquites con yogur griego y feta'},
+      {img:'assets/plato-patatas.jpg', name:'Patatas asadas'},
+      {img:'assets/plato-tortillas.jpg', name:'Tortillas amarilla, azul y morada'},
+      {img:'assets/plato-arroz.jpg', name:'Arroz con edamame y granada'}
+    ]},
+    gr: {code:'GR-04®', title:'Grasa buena', items:[
+      {img:'assets/mod-guacamole-v3.jpg', name:'Guacamole'},
+      {img:'assets/plato-nueces.jpg', name:'Nueces tostadas'},
+      {img:'assets/plato-semillas.jpg', name:'Semillas de girasol'},
+      {img:'assets/plato-mantequilla.jpg', name:'Mantequilla'}
+    ]}
+  };
+  const modal = document.getElementById('menu-modal');
+  document.querySelectorAll('.mod-open').forEach(btn=>{
     btn.addEventListener('click',()=>{
-      const list = document.getElementById(btn.getAttribute('aria-controls'));
-      const open = list.classList.toggle('open');
-      btn.setAttribute('aria-expanded', open);
-      btn.querySelector('.lbl').textContent = open ? 'Ocultar' : btn.dataset.label;
+      const d = MENU[btn.dataset.cat];
+      document.getElementById('menu-modal-code').textContent = d.code;
+      document.getElementById('menu-modal-title').textContent = d.title;
+      document.getElementById('menu-modal-grid').innerHTML = d.items.map(i=>
+        `<figure><img src="${i.img}" alt="${i.name}" loading="lazy"><figcaption>${i.name}</figcaption></figure>`
+      ).join('');
+      modal.showModal();
     });
   });
+  modal.querySelector('.modal-close').addEventListener('click',()=>modal.close());
+  modal.addEventListener('click',e=>{ if(e.target===modal) modal.close(); });
 
   // nav móvil
   const toggle = document.querySelector('.menu-toggle');
