@@ -402,8 +402,8 @@
   <!-- CINTA DE CÓDIGOS -->
   <div class="codes" aria-hidden="true">
     <div class="codes-track">
-      <span>PR-01® Proteína</span><span>VG-02® Vegetal</span><span>CB-03® Carbohidrato</span><span>GR-04® Grasa buena</span><span>Salmón al pastor</span><span>Tenderloin al mole verde</span><span>Pollo al cilantro</span>
-      <span>PR-01® Proteína</span><span>VG-02® Vegetal</span><span>CB-03® Carbohidrato</span><span>GR-04® Grasa buena</span><span>Salmón al pastor</span><span>Tenderloin al mole verde</span><span>Pollo al cilantro</span>
+      <span>PR-01® Proteína</span><span>VG-02® Vegetal</span><span>CB-03® Carbohidrato</span><span>GR-04® Grasa buena</span><span>Salmón al pastor con achiote</span><span>Tenderloin al mole verde</span><span>Pollo al cilantro y limón</span>
+      <span>PR-01® Proteína</span><span>VG-02® Vegetal</span><span>CB-03® Carbohidrato</span><span>GR-04® Grasa buena</span><span>Salmón al pastor con achiote</span><span>Tenderloin al mole verde</span><span>Pollo al cilantro y limón</span>
     </div>
   </div>
 
@@ -484,15 +484,15 @@
       <div class="dish-gallery reveal">
         <figure>
           <img src="assets/dish-salmon-v3.jpg" alt="Salmón al pastor con costra de achiote y pico de piña tatemada, en plato de aluminio" loading="lazy">
-          <figcaption><span class="mono">PR-01®</span> Salmón al pastor</figcaption>
+          <figcaption><span class="mono">PR-01®</span> Salmón al pastor con achiote</figcaption>
         </figure>
         <figure>
           <img src="assets/dish-pollo-v3.jpg" alt="Pollo al cilantro en láminas con cebollitas tatemadas, en plato de aluminio" loading="lazy">
-          <figcaption><span class="mono">PR-01®</span> Pollo al cilantro</figcaption>
+          <figcaption><span class="mono">PR-01®</span> Pollo al cilantro y limón</figcaption>
         </figure>
         <figure>
           <img src="assets/dish-verduras-v3.jpg" alt="Verduras tatemadas sobre salsa macha de cacahuate, en plato de aluminio" loading="lazy">
-          <figcaption><span class="mono">VG-02®</span> Verduras tatemadas</figcaption>
+          <figcaption><span class="mono">VG-02®</span> Verduras tatemadas con cacahuate</figcaption>
         </figure>
       </div>
       <p class="dark-note">Cada módulo se sirve en la porción exacta que tu perfil pide. El mismo plato sabe igual de bien con 120 g o con 220 g de proteína — solo cambia lo que tu cuerpo necesita.</p>
@@ -634,26 +634,25 @@
   // modal de categorías del menú
   const MENU = {
     pr: {code:'PR-01®', title:'Proteína', items:[
-      {img:'assets/dish-salmon-v3.jpg', name:'Salmón al pastor'},
+      {img:'assets/dish-salmon-v3.jpg', name:'Salmón al pastor con achiote'},
       {img:'assets/mod-tenderloin-v3.jpg', name:'Tenderloin al mole verde'},
-      {img:'assets/dish-pollo-v3.jpg', name:'Pollo al cilantro'}
+      {img:'assets/dish-pollo-v3.jpg', name:'Pollo al cilantro y limón'}
     ]},
     vg: {code:'VG-02®', title:'Vegetal', items:[
-      {img:'assets/mod-brocoli-v3.jpg', name:'Brócoli asado sobre tzatziki'},
-      {img:'assets/dish-verduras-v3.jpg', name:'Verduras tatemadas con salsa de cacahuate'},
-      {img:'assets/plato-esparragos.jpg', name:'Espárragos asados'}
+      {img:'assets/mod-brocoli-v3.jpg', name:'Brócoli al carbón sobre tzatziki'},
+      {img:'assets/dish-verduras-v3.jpg', name:'Verduras tatemadas con cacahuate'},
+      {img:'assets/plato-esparragos.jpg', name:'Espárragos asados con limón'},
+      {img:'assets/plato-nopal.jpg', name:'Ensalada de nopal con jitomate'}
     ]},
     cb: {code:'CB-03®', title:'Carbohidrato', items:[
-      {img:'assets/mod-esquites-v3.jpg', name:'Esquites con yogur griego y feta'},
-      {img:'assets/plato-patatas.jpg', name:'Patatas asadas'},
-      {img:'assets/plato-tortillas.jpg', name:'Tortillas amarilla, azul y morada'},
-      {img:'assets/plato-arroz.jpg', name:'Arroz con edamame y granada'}
+      {img:'assets/plato-arroz.jpg', name:'Arroz con edamame y granada'},
+      {img:'assets/plato-camote.jpg', name:'Camote asado con chile ancho'},
+      {img:'assets/mod-esquites-v3.jpg', name:'Esquites con yogur y feta'}
     ]},
     gr: {code:'GR-04®', title:'Grasa buena', items:[
-      {img:'assets/mod-guacamole-v3.jpg', name:'Guacamole'},
-      {img:'assets/plato-nueces.jpg', name:'Nueces tostadas'},
-      {img:'assets/plato-semillas.jpg', name:'Semillas de girasol'},
-      {img:'assets/plato-mantequilla.jpg', name:'Mantequilla'}
+      {img:'assets/mod-guacamole-v3.jpg', name:'Guacamole artesanal'},
+      {img:'assets/plato-nueces-piquin.jpg', name:'Nueces con chile piquín'},
+      {img:'assets/plato-semillas.jpg', name:'Semillas de girasol tostadas'}
     ]}
   };
   const modal = document.getElementById('menu-modal');
