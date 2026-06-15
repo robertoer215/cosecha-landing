@@ -303,7 +303,7 @@
     padding:12px;
   }
 
-  /* ---------- CTA final ---------- */
+  /* ---------- CTA final / formulario ---------- */
   .final{text-align:center;padding:112px 24px}
   .final .kicker{
     font-family:var(--mono);font-size:12px;letter-spacing:.04em;
@@ -311,7 +311,56 @@
     border:1px solid var(--clay);border-radius:9999px;padding:5px 14px;
   }
   .final h2{font-size:clamp(36px,4.4vw,52px);font-weight:300;letter-spacing:-1.44px;line-height:1;max-width:20ch;margin:0 auto 18px}
-  .final p{font-size:17px;font-weight:350;margin-bottom:36px}
+  .final p{font-size:17px;font-weight:350;margin-bottom:36px;letter-spacing:-0.36px}
+
+  /* ---------- lead form ---------- */
+  .form-card{
+    max-width:580px;margin:0 auto;
+    background:var(--parchment);
+    border:1px solid var(--clay);
+    border-radius:24px;
+    padding:40px;
+    text-align:left;
+  }
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+  .form-full{grid-column:1/-1}
+  .form-field{display:flex;flex-direction:column;gap:6px}
+  .form-field label{
+    font-family:var(--mono);font-size:10px;letter-spacing:.06em;
+    color:var(--clay);opacity:.6;
+  }
+  .select-wrap{position:relative}
+  .select-wrap::after{
+    content:'↓';position:absolute;right:13px;top:50%;transform:translateY(-50%);
+    color:var(--clay);pointer-events:none;font-size:12px;opacity:.65;
+  }
+  .form-field select,
+  .form-field input{
+    width:100%;padding:11px 14px;
+    background:var(--stone);
+    border:1px solid transparent;border-radius:12px;
+    font-family:var(--sans);font-size:14px;color:var(--clay);
+    letter-spacing:-0.28px;outline:none;
+    -webkit-appearance:none;appearance:none;
+    transition:border-color .15s ease,background .15s ease;
+    cursor:pointer;
+  }
+  .form-field select:focus,.form-field input:focus{
+    border-color:var(--clay);background:white;
+  }
+  .form-field input::placeholder{color:var(--gray)}
+  .form-submit{
+    width:100%;text-align:center;padding:14px;font-size:15px;
+    margin-top:8px;cursor:pointer;font-family:var(--sans);border:none;
+  }
+  .form-success{display:none;text-align:center;padding:32px 0 8px}
+  .form-success.show{display:block}
+  .form-success .big{font-size:clamp(28px,3.5vw,38px);font-weight:300;letter-spacing:-1px;line-height:1.1;margin:14px 0 10px}
+  .form-success p{font-size:16px;font-weight:350;letter-spacing:-0.32px;opacity:.75}
+  @media(max-width:640px){
+    .form-card{padding:28px 18px;border-radius:20px}
+    .form-grid{grid-template-columns:1fr}
+  }
 
   /* ---------- footer ---------- */
   footer{background:var(--clay-reverse);color:var(--sage);padding:56px 0 32px}
@@ -371,6 +420,7 @@
       <li><a href="#como">Cómo funciona</a></li>
       <li><a href="#menu">Menú</a></li>
       <li><a href="#app">App</a></li>
+      <li><a href="#registro">Guía gratis</a></li>
       <li><a class="btn btn-primary" href="https://robertoer215.github.io/cosecha-macro-calculator/">Arma tu plato</a></li>
     </ul>
   </nav>
@@ -551,12 +601,110 @@
     </div>
   </section>
 
-  <!-- CTA FINAL -->
-  <section class="final">
-    <span class="kicker">EMPIEZA HOY</span>
-    <h2 class="display">Tu objetivo ya tiene cocina</h2>
-    <p>Calcula tus macros y arma tu primer plato en menos de tres minutos.</p>
-    <a class="btn btn-primary" href="https://robertoer215.github.io/cosecha-macro-calculator/">Arma tu plato</a>
+  <!-- GUÍA GRATUITA — FORMULARIO DE CAPTURA -->
+  <section id="registro" class="final">
+    <span class="kicker">GUÍA GRATIS</span>
+    <h2 class="display">¿Cómo come alguien<br>que logra su objetivo?</h2>
+    <p>60 segundos. Tu guía personalizada — basada en ciencia — llega directo a tu correo.</p>
+
+    <div class="form-card reveal">
+      <form id="cosecha-form" novalidate>
+
+        <div class="form-grid">
+          <div class="form-field form-full">
+            <label for="f-objetivo">OBJETIVO FÍSICO</label>
+            <div class="select-wrap">
+              <select id="f-objetivo" name="objetivo_fisico" required>
+                <option value="" disabled selected>Selecciona tu objetivo →</option>
+                <option>Ganar músculo y masa</option>
+                <option>Perder grasa y definirme</option>
+                <option>Mejorar mi rendimiento deportivo</option>
+                <option>Comer más sano y con energía</option>
+                <option>Recuperarme y sentirme mejor</option>
+                <option>Quiero invertir o colaborar</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="f-frecuencia">FRECUENCIA DE ENTRENO</label>
+            <div class="select-wrap">
+              <select id="f-frecuencia" name="frecuencia_entreno" required>
+                <option value="" disabled selected>¿Cuántos días?</option>
+                <option>No entreno actualmente</option>
+                <option>1-2 veces por semana</option>
+                <option>3-5 veces por semana</option>
+                <option>Entreno todos los días</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="f-alimentacion">ALIMENTACIÓN FUERA DE CASA</label>
+            <div class="select-wrap">
+              <select id="f-alimentacion" name="alimentacion_fuera">
+                <option value="" disabled selected>¿Cómo comes fuera?</option>
+                <option>Como lo que encuentro</option>
+                <option>Intento elegir opciones sanas</option>
+                <option>Sigo un plan pero me cuesta fuera de casa</option>
+                <option>Tengo nutriólogo pero igual me complica</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="f-zona">ZONA EN PUEBLA</label>
+            <div class="select-wrap">
+              <select id="f-zona" name="zona">
+                <option value="" disabled selected>¿Dónde estás?</option>
+                <option>Angelópolis</option>
+                <option>UDLAP</option>
+                <option>Centro Histórico</option>
+                <option>Anahuac</option>
+                <option>Otra zona de Puebla</option>
+                <option>Otra ciudad</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="f-ticket">TICKET PROMEDIO POR COMIDA</label>
+            <div class="select-wrap">
+              <select id="f-ticket" name="ticket_promedio">
+                <option value="" disabled selected>¿Cuánto gastas?</option>
+                <option>Menos de 100 MXN</option>
+                <option>100-200 MXN</option>
+                <option>200-350 MXN</option>
+                <option>Más de 350 MXN</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-field form-full">
+            <label for="f-nombre">NOMBRE</label>
+            <input id="f-nombre" name="nombre" type="text" placeholder="¿Cómo te llamas?" required>
+          </div>
+
+          <div class="form-field">
+            <label for="f-whatsapp">WHATSAPP</label>
+            <input id="f-whatsapp" name="whatsapp" type="tel" placeholder="222 000 0000" required>
+          </div>
+
+          <div class="form-field">
+            <label for="f-email">CORREO ELECTRÓNICO</label>
+            <input id="f-email" name="email" type="email" placeholder="tu@correo.com" required>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary form-submit">Quiero mi guía gratis →</button>
+      </form>
+
+      <div class="form-success" id="form-success">
+        <span class="kicker">LISTO</span>
+        <p class="big">Tu guía está en camino</p>
+        <p>Revisa tu correo en los próximos minutos. Si tienes duda, escríbenos por WhatsApp.</p>
+      </div>
+    </div>
   </section>
 
 <dialog id="menu-modal" aria-labelledby="menu-modal-title">
@@ -669,6 +817,29 @@
   });
   modal.querySelector('.modal-close').addEventListener('click',()=>modal.close());
   modal.addEventListener('click',e=>{ if(e.target===modal) modal.close(); });
+
+  // formulario de captura
+  const cosechaForm = document.getElementById('cosecha-form');
+  const formSuccess = document.getElementById('form-success');
+  if(cosechaForm){
+    cosechaForm.addEventListener('submit', async e=>{
+      e.preventDefault();
+      const data = {};
+      new FormData(cosechaForm).forEach((v,k)=>{ if(v) data[k]=v; });
+      const btn = cosechaForm.querySelector('.form-submit');
+      btn.disabled = true;
+      btn.textContent = 'Enviando…';
+      try{
+        await fetch('https://n8n.srv1683942.hstgr.cloud/webhook/cosecha-lead-magnet-m3',{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify(data)
+        });
+      }catch(_){}
+      cosechaForm.style.display='none';
+      formSuccess.classList.add('show');
+    });
+  }
 
   // nav móvil
   const toggle = document.querySelector('.menu-toggle');
