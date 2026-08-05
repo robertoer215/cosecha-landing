@@ -303,6 +303,27 @@
     padding:12px;
   }
 
+  /* ---------- movimiento en vivo: barras y demo del teléfono ---------- */
+  @keyframes tilePop{0%{transform:scale(.35);opacity:.35}60%{transform:scale(1.14)}100%{transform:scale(1);opacity:1}}
+  .tile-bar i.pop{animation:tilePop .34s cubic-bezier(.4,1.5,.5,1)}
+  /* ola de brillo perpetua sobre las barras de ejemplo (izquierda) */
+  @keyframes tileWave{0%,100%{filter:brightness(1)}45%{filter:brightness(1.6)}}
+  .tile-bar.live i.fill{animation:tileWave 2.4s ease-in-out infinite;animation-delay:calc(var(--i) * 90ms)}
+  /* punto de marca "en vivo" latiendo en el teléfono */
+  @keyframes livePulse{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.45)}}
+  .phone.playing .ph-brand i{animation:livePulse 1.6s ease-in-out infinite}
+  /* chip de acción que anuncia cada movimiento */
+  .ph-action{
+    display:inline-flex;align-items:center;
+    font-family:var(--mono);font-size:10px;letter-spacing:.03em;
+    background:var(--ember);color:var(--clay);
+    border-radius:9999px;padding:5px 11px;margin:0 0 18px;
+    opacity:0;transform:translateY(-5px);
+    transition:opacity .35s ease,transform .35s ease;
+  }
+  .ph-action.show{opacity:1;transform:none}
+  .ph-kcal .now{font-variant-numeric:tabular-nums}
+
   /* ---------- CTA final / formulario ---------- */
   .final{text-align:center;padding:112px 24px}
   .final .kicker{
@@ -579,8 +600,9 @@
         <div class="screen">
           <div class="ph-brand">COSECHA<i></i></div>
           <div class="ph-goal">OBJETIVO · GANAR MÚSCULO</div>
-          <div class="ph-kcal">1,840 / 2,400</div>
+          <div class="ph-kcal"><span class="now">1,840</span> / 2,400</div>
           <div class="ph-kcal-lbl">KCAL DE HOY</div>
+          <div class="ph-action mono" id="ph-action" aria-hidden="true">+ Pollo al cilantro</div>
           <div class="macro-rows">
             <div>
               <div class="macro-label"><span>Proteína</span><span>132 G</span></div>
@@ -748,36 +770,134 @@
 </footer>
 
 <script>
-  // barras de macros tipo azulejo
-  document.querySelectorAll('.tile-bar').forEach(bar=>{
-    const fill = parseInt(bar.dataset.fill,10) || 0;
-    for(let i=0;i<20;i++){
-      const t = document.createElement('i');
-      if(i<fill) t.dataset.f = '1';
-      bar.appendChild(t);
-    }
-  });
-
-  // reveal + llenado al entrar en viewport
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // reveal al entrar en viewport (fundido + desplazamiento)
   const io = new IntersectionObserver(entries=>{
     entries.forEach(e=>{
       if(!e.isIntersecting) return;
       e.target.classList.add('in');
-      e.target.querySelectorAll('.tile-bar').forEach(bar=>{
-        bar.querySelectorAll('i[data-f]').forEach((t,i)=>{
-          if(reduce){ t.classList.add('fill'); }
-          else setTimeout(()=>t.classList.add('fill'), i*40);
-        });
-      });
       io.unobserve(e.target);
     });
   },{threshold:.2});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-  // las barras dentro de columnas de texto (no .reveal) se llenan de inmediato
-  document.querySelectorAll('.macro-rows').forEach(rows=>{
-    if(!rows.closest('.reveal')) io.observe(rows);
+
+  // ---------- barras tipo azulejo: construcción + control de llenado ----------
+  document.querySelectorAll('.tile-bar').forEach(bar=>{
+    bar.innerHTML='';
+    for(let i=0;i<20;i++){
+      const t=document.createElement('i');
+      t.style.setProperty('--i', i);
+      bar.appendChild(t);
+    }
+    bar._fill=0;
   });
+
+  // anima el nivel de una barra hasta n azulejos, con ola escalonada
+  function setFill(bar, n, {animate=true, stagger=32, pop=true}={}){
+    const tiles=bar.children, cur=bar._fill||0;
+    n=Math.max(0,Math.min(20,Math.round(n)));
+    if(!animate || reduce){
+      for(let i=0;i<20;i++) tiles[i].classList.toggle('fill', i<n);
+      bar._fill=n; return;
+    }
+    if(n>cur){                          // sube: se encienden de izq. a der.
+      for(let i=cur;i<n;i++){
+        const t=tiles[i], d=(i-cur)*stagger;
+        setTimeout(()=>{ t.classList.add('fill'); if(pop){ t.classList.add('pop'); setTimeout(()=>t.classList.remove('pop'),340);} }, d);
+      }
+    }else if(n<cur){                     // baja: se apagan de der. a izq.
+      for(let i=cur-1;i>=n;i--){
+        const t=tiles[i], d=(cur-1-i)*stagger;
+        setTimeout(()=>t.classList.remove('fill'), d);
+      }
+    }
+    bar._fill=n;
+  }
+
+  // ---------- contador numérico suave ----------
+  const int = v => Math.round(v).toLocaleString('es-MX');
+  function tween(el, to, dur, fmt){
+    const from = (el._val==null)? to : el._val;
+    el._val = to;
+    if(reduce || !dur){ el.textContent=fmt(to); return; }
+    const start=performance.now();
+    (function frame(now){
+      const p=Math.min(1,(now-start)/dur), e=1-Math.pow(1-p,3);
+      el.textContent=fmt(from+(to-from)*e);
+      if(p<1) requestAnimationFrame(frame);
+      else el.textContent=fmt(to);
+    })(performance.now());
+  }
+
+  // ---------- barras de ejemplo (columna izquierda): brillo perpetuo ----------
+  const leftBars=[...document.querySelectorAll('#app .macro-rows .tile-bar')].filter(b=>!b.closest('.phone'));
+  let leftDone=false;
+  function fillLeft(){
+    if(leftDone) return; leftDone=true;
+    leftBars.forEach(bar=>{
+      setFill(bar, parseInt(bar.dataset.fill,10)||0, {animate:!reduce, stagger:46, pop:false});
+      if(!reduce) bar.classList.add('live');
+    });
+  }
+
+  // ---------- demo en vivo del teléfono: arma el día en bucle ----------
+  const phone=document.querySelector('.phone');
+  const kcalNow=phone.querySelector('.ph-kcal .now');
+  const actionEl=document.getElementById('ph-action');
+  const phoneRows=[...phone.querySelectorAll('.macro-rows > div')].map(row=>({
+    val:row.querySelector('.macro-label span:last-child'),
+    bar:row.querySelector('.tile-bar')
+  }));
+
+  const STATES=[
+    {chip:'Nuevo día · desayuno', kcal:660,  m:[[48,6],[72,6],[20,5]]},
+    {chip:'+ Salmón al pastor',   kcal:1182, m:[[92,12],[118,10],[38,10]]},
+    {chip:'+ Guacamole',          kcal:1390, m:[[94,12],[122,10],[58,15]]},   // grasas suben
+    {chip:'Tortilla → Arroz',     kcal:1484, m:[[96,12],[158,13],[52,14]]},   // carbos suben
+    {chip:'+ Pollo al cilantro',  kcal:1840, m:[[132,17],[198,17],[61,16]]}
+  ];
+
+  let si=0;
+  function applyState(s, animate){
+    if(actionEl){
+      actionEl.textContent=s.chip;
+      if(animate){ actionEl.classList.remove('show'); void actionEl.offsetWidth; }
+      actionEl.classList.add('show');
+    }
+    tween(kcalNow, s.kcal, animate?850:0, int);
+    phoneRows.forEach((r,idx)=>{
+      tween(r.val, s.m[idx][0], animate?850:0, v=>int(v)+' G');
+      setFill(r.bar, s.m[idx][1], {animate, stagger:34, pop:true});
+    });
+  }
+
+  let timer=null, running=false;
+  function step(){
+    si=(si+1)%STATES.length;
+    applyState(STATES[si], true);
+    timer=setTimeout(step, 2700);
+  }
+  function start(){
+    if(running||reduce) return;
+    running=true; phone.classList.add('playing');
+    fillLeft();
+    timer=setTimeout(step, 1100);      // primer movimiento pronto, para llamar la atención
+  }
+  function stop(){
+    running=false; phone.classList.remove('playing');
+    if(timer) clearTimeout(timer);
+  }
+
+  if(reduce){                          // sin animación: estado final rico y fijo
+    fillLeft();
+    applyState(STATES[STATES.length-1], false);
+  }else{
+    applyState(STATES[0], false);      // arranca en el desayuno
+    new IntersectionObserver(es=>{
+      es.forEach(e=> e.isIntersecting ? start() : stop());
+    },{threshold:.3}).observe(document.getElementById('app'));
+  }
 
   // modal de categorías del menú
   const MENU = {
