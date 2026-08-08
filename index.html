@@ -116,11 +116,16 @@
   .menu-toggle svg{display:block}
 
   /* ---------- hero: video protagonista ---------- */
-  .hero{padding:32px 0 48px}
+  /* --hero-w: el video y su pie comparten ancho para alinear en una sola columna.
+     Se descuenta la altura de barra + nav + pie para que todo el hero quepa sin scroll. */
+  /* el max() evita que en pantallas bajas el video encoja tanto que el pie
+     se estreche y desborde: por debajo de ~500px manda el piso, no la altura */
+  .hero{padding:32px 0 56px;--hero-w:min(100% - 96px, max(calc(100vh - 330px), 500px))}
+  @supports (height:100svh){
+    .hero{--hero-w:min(100% - 96px, max(calc(100svh - 330px), 500px))}
+  }
   .hero-stage{
-    /* el cuadro completo debe caber bajo la barra + nav, para no cortar la báscula */
-    width:min(100% - 96px, calc(100vh - 190px));
-    width:min(100% - 96px, calc(100svh - 190px));
+    width:var(--hero-w);
     margin:0 auto;
     aspect-ratio:1/1;
     border-radius:32px;overflow:hidden;
@@ -130,6 +135,25 @@
   .hero-stage video{
     display:block;width:100%;height:100%;
     object-fit:cover;
+  }
+  .hero-caption{
+    width:var(--hero-w);
+    margin:28px auto 0;
+    padding-top:20px;
+    border-top:1px solid var(--clay);
+    display:grid;grid-template-columns:auto 1fr;gap:0 44px;
+    align-items:start;
+  }
+  .hero-caption .tag{
+    font-family:var(--mono);font-size:11px;letter-spacing:.06em;
+    line-height:1.7;white-space:nowrap;opacity:.65;
+  }
+  /* segunda palabra en su propio renglón; en móvil vuelve a línea única
+     (span en vez de <br> para no perder el espacio al colapsar) */
+  .hero-caption .tag > span{display:block}
+  .hero-caption p{
+    font-size:17px;font-weight:350;letter-spacing:-0.34px;line-height:1.55;
+    max-width:58ch;text-wrap:pretty;margin:0;
   }
 
   /* ---------- cinta de códigos (mono, boticario) ---------- */
@@ -417,7 +441,9 @@
   @media (max-width:960px){
     .wrap{padding:0 24px}
     .app-grid{grid-template-columns:1fr}
-    .hero-stage{width:min(100% - 48px, calc(100svh - 160px))}
+    .hero{--hero-w:min(100% - 48px, calc(100svh - 300px))}
+    .hero-caption{grid-template-columns:1fr;gap:14px}
+    .hero-caption .tag > span{display:inline}
     .steps{grid-template-columns:1fr;border-top:none}
     .step{border-right:none;border-top:1px solid var(--clay);padding:28px 0 28px}
     .step + .step{padding-left:0}
@@ -437,9 +463,10 @@
     .nav-links.open{display:flex}
     .menu-toggle{display:block}
     .mod-grid{grid-template-columns:1fr}
-    /* en móvil el video va de borde a borde */
-    .hero{padding:12px 0 32px}
-    .hero-stage{width:100%;border-radius:0;border-left:none;border-right:none}
+    /* en móvil el video va de borde a borde y el pie se alinea al margen del sitio */
+    .hero{padding:12px 0 40px;--hero-w:100%}
+    .hero-stage{border-radius:0;border-left:none;border-right:none}
+    .hero-caption{width:calc(100% - 48px);margin-top:28px}
       }
 </style>
 </head>
@@ -472,7 +499,11 @@
         poster="assets/hero-plato-bascula.jpg"
         autoplay muted loop playsinline
         preload="auto"
-        aria-label="Plato COSECHA de salmón al pastor, camote tatemado y guacamole sobre báscula marcando 320 gramos"></video>
+        aria-label="Un plato COSECHA se arma sobre una báscula: salmón al pastor, camote tatemado y guacamole, hasta 470 gramos y 810 kilocalorías"></video>
+    </div>
+    <div class="hero-caption">
+      <span class="tag">ALTA COCINA <span>CALCULADA</span></span>
+      <p>Cocina mexicana con porciones y macronutrientes calculados para tu objetivo. Tú entrenas y vives; nosotros pesamos, medimos y cocinamos. Sin contar calorías. Sin sacrificar sabor.</p>
     </div>
   </section>
 
