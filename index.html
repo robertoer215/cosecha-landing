@@ -487,12 +487,20 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero-stage">
+      <!-- Mismo master 2160x2160 en tres códecs. El navegador toma la primera
+           fuente que sabe reproducir: HEVC y AV1 pesan la mitad o menos que
+           H.264 con calidad idéntica; H.264 queda de red de seguridad.
+           HEVC va primero porque en Apple y en la mayoría de equipos con
+           decodificador por hardware evita cargar la CPU a 2160p. -->
       <video
-        src="assets/hero-plato-bascula-2160.mp4"
         poster="assets/hero-plato-bascula-2160.jpg"
         autoplay muted loop playsinline
         preload="auto"
-        aria-label="Un plato COSECHA se arma sobre una báscula: salmón al pastor, camote tatemado y guacamole, hasta 470 gramos"></video>
+        aria-label="Un plato COSECHA se arma sobre una báscula: salmón al pastor, camote tatemado y guacamole, hasta 470 gramos">
+        <source src="assets/hero-plato-bascula-2160.hevc.mp4" type='video/mp4; codecs="hvc1.1.6.L150.90"'>
+        <source src="assets/hero-plato-bascula-2160.av1.mp4"  type='video/mp4; codecs="av01.0.08M.08"'>
+        <source src="assets/hero-plato-bascula-2160.mp4"      type="video/mp4">
+      </video>
     </div>
     <div class="hero-caption">
       <h1 class="display">Come rico. Avanza exacto.</h1>
