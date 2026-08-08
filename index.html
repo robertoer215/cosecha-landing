@@ -115,26 +115,22 @@
   .menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:6px;color:var(--clay)}
   .menu-toggle svg{display:block}
 
-  /* ---------- hero: dos columnas Seed ---------- */
-  .hero{padding:96px 0 80px}
-  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center}
-  .hero h1{font-size:clamp(40px,4.6vw,56px)}
-  .hero .lead{
-    font-size:18px;font-weight:350;letter-spacing:-0.36px;line-height:1.5;
-    max-width:46ch;margin:24px 0 32px;text-wrap:pretty;
-  }
-  .hero-ctas{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
-  .hero-photo{
+  /* ---------- hero: video protagonista ---------- */
+  .hero{padding:32px 0 48px}
+  .hero-stage{
+    /* el cuadro completo debe caber bajo la barra + nav, para no cortar la báscula */
+    width:min(100% - 96px, calc(100vh - 190px));
+    width:min(100% - 96px, calc(100svh - 190px));
+    margin:0 auto;
+    aspect-ratio:1/1;
     border-radius:32px;overflow:hidden;
     border:1px solid var(--clay);
+    background:var(--stone);
   }
-  .hero-photo img{width:100%;aspect-ratio:4/5;object-fit:cover}
-  .hero-stats{
-    display:flex;gap:40px;margin-top:48px;padding-top:24px;
-    border-top:1px solid var(--clay);
+  .hero-stage video{
+    display:block;width:100%;height:100%;
+    object-fit:cover;
   }
-  .hero-stats div strong{display:block;font-size:24px;font-weight:300;letter-spacing:-0.48px}
-  .hero-stats div span{font-family:var(--mono);font-size:11px;letter-spacing:.015em;color:var(--clay);opacity:.65}
 
   /* ---------- cinta de códigos (mono, boticario) ---------- */
   .codes{
@@ -420,14 +416,15 @@
   /* ---------- responsive ---------- */
   @media (max-width:960px){
     .wrap{padding:0 24px}
-    .hero-grid,.app-grid{grid-template-columns:1fr}
+    .app-grid{grid-template-columns:1fr}
+    .hero-stage{width:min(100% - 48px, calc(100svh - 160px))}
     .steps{grid-template-columns:1fr;border-top:none}
     .step{border-right:none;border-top:1px solid var(--clay);padding:28px 0 28px}
     .step + .step{padding-left:0}
     .mod-grid{grid-template-columns:repeat(2,1fr)}
     .phone{margin-top:8px}
     section{padding:72px 0}
-    .hero{padding:64px 0 56px}
+    .hero{padding:20px 0 40px}
   }
   @media (max-width:640px){
     .nav-links{
@@ -440,7 +437,9 @@
     .nav-links.open{display:flex}
     .menu-toggle{display:block}
     .mod-grid{grid-template-columns:1fr}
-    .hero-stats{flex-wrap:wrap;gap:20px}
+    /* en móvil el video va de borde a borde */
+    .hero{padding:12px 0 32px}
+    .hero-stage{width:100%;border-radius:0;border-left:none;border-right:none}
       }
 </style>
 </head>
@@ -467,23 +466,13 @@
 <main>
   <!-- HERO -->
   <section class="hero">
-    <div class="wrap hero-grid">
-      <div>
-        <h1 class="display">Come rico.<br>Avanza exacto.</h1>
-        <p class="lead">Alta cocina mexicana con porciones y macronutrientes calculados para tu objetivo. Tú entrenas y vives; nosotros pesamos, medimos y cocinamos. Sin contar calorías. Sin sacrificar sabor.</p>
-        <div class="hero-ctas">
-          <a class="btn btn-primary" href="https://robertoer215.github.io/cosecha-macro-calculator/">Arma tu plato</a>
-          <a class="link-arrow" href="#menu">Ver el menú →</a>
-        </div>
-        <div class="hero-stats">
-          <div><strong>±5 g</strong><span>PRECISIÓN / MACRO</span></div>
-          <div><strong>4</strong><span>MÓDULOS / PLATO</span></div>
-          <div><strong>0</strong><span>CALORÍAS QUE CUENTAS TÚ</span></div>
-        </div>
-      </div>
-      <div class="hero-photo reveal">
-        <img src="assets/hero-bowl-v3.jpg" alt="Bowl COSECHA en plato de aluminio: salmón al pastor, frijol negro, esquites, pimientos tatemados y tortilla azul" loading="eager">
-      </div>
+    <div class="hero-stage">
+      <video
+        src="assets/hero-plato-bascula.mp4"
+        poster="assets/hero-plato-bascula.jpg"
+        autoplay muted loop playsinline
+        preload="auto"
+        aria-label="Plato COSECHA de salmón al pastor, camote tatemado y guacamole sobre báscula marcando 320 gramos"></video>
     </div>
   </section>
 
@@ -772,6 +761,13 @@
 
 <script>
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // hero: si el usuario pide menos movimiento, congelamos el video en el póster
+  if(reduce){
+    document.querySelectorAll('.hero-stage video').forEach(v=>{
+      v.autoplay=false; v.removeAttribute('autoplay'); v.pause();
+    });
+  }
 
   // reveal al entrar en viewport (fundido + desplazamiento)
   const io = new IntersectionObserver(entries=>{
