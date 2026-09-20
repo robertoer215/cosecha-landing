@@ -16,7 +16,8 @@
     --ember:#FFD3A8;           /* lavado de acento — badges, banda de anuncio (rol lime-sprout) */
     --ember-dot:#D2691E;       /* punto de marca y micro-acentos, con moderación */
     --orange:#C05A1F;          /* mismo acento que la app: continuidad de marca en el CTA */
-    --orange-ink:#AE511C;      /* un paso mas oscuro — hover y halo */
+    --orange-ink:#AE511C;      /* un paso mas oscuro — hover y CTA pequeno del nav */
+    --orange-deep:#8F400F;     /* hover del CTA pequeno */
     --parchment:#FCFAF5;       /* lienzo cálido */
     --stone:#F0EBE2;           /* banda elevada sutil */
     --sage:#C9C2B6;            /* superficies apagadas, precios en oscuro */
@@ -73,6 +74,12 @@
   }
   .btn-primary{background:var(--clay);color:var(--parchment)}
   .btn-primary:hover{background:var(--clay-reverse)}
+  /* CTA a la calculadora: naranja en todo el sitio. A 14px es texto pequeno,
+     asi que usa --orange-ink (5,26:1) y no --orange (4,45:1, insuficiente
+     salvo en texto grande). El boton del formulario sigue en barro: naranja
+     significa "ir a la calculadora", barro es todo lo demas. */
+  .btn-orange{background:var(--orange-ink);color:#fff;border-color:var(--orange-ink)}
+  .btn-orange:hover{background:var(--orange-deep);border-color:var(--orange-deep)}
   .btn:focus-visible{outline:2px solid var(--ember-dot);outline-offset:3px}
   .link-arrow{
     font-weight:400;font-size:16px;letter-spacing:-0.4px;
@@ -120,7 +127,7 @@
      Se descuenta la altura de barra + nav + pie para que todo el hero quepa sin scroll. */
   /* el max() evita que en pantallas bajas el video encoja tanto que el pie
      se estreche y desborde: por debajo de ~470px manda el piso, no la altura */
-  .hero{padding:32px 0 56px;--hero-w:min(100% - 96px, max(calc(100vh - 405px), 470px))}
+  .hero{padding:20px 0 32px;--hero-w:min(100% - 96px, max(calc(100vh - 405px), 470px))}
   @supports (height:100svh){
     .hero{--hero-w:min(100% - 96px, max(calc(100svh - 405px), 470px))}
   }
@@ -138,8 +145,8 @@
   }
   .hero-caption{
     width:var(--hero-w);
-    margin:26px auto 0;
-    padding-top:20px;
+    margin:18px auto 0;
+    padding-top:18px;
     border-top:1px solid var(--clay);
   }
   .hero-caption h1{
@@ -292,6 +299,7 @@
     0%{opacity:.6;transform:scale(1)}
     70%,100%{opacity:0;transform:scale(1.22)}
   }
+  .hero-cta{margin-top:24px}
   .invite-note{
     margin-top:14px;font-family:var(--mono);
     font-size:11px;letter-spacing:.04em;opacity:.78;
@@ -441,7 +449,7 @@
       <li><a href="#como">Cómo funciona</a></li>
       <li><a href="#app">App</a></li>
       <li><a href="#registro">Guía gratis</a></li>
-      <li><a class="btn btn-primary" href="https://robertoer215.github.io/cosecha-macro-calculator/">Arma tu plato</a></li>
+      <li><a class="btn btn-orange" href="https://robertoer215.github.io/cosecha-macro-calculator/">Arma tu plato</a></li>
     </ul>
   </nav>
 </div>
@@ -468,6 +476,10 @@
     <div class="hero-caption">
       <h1 class="display">Come rico. Avanza exacto.</h1>
       <p>Alta cocina mexicana con porciones y macronutrientes calculados para tu objetivo. Tú entrenas y vives; nosotros pesamos, medimos y cocinamos. Sin contar calorías. Sin sacrificar sabor.</p>
+      <a class="invite-cta hero-cta" href="https://robertoer215.github.io/cosecha-macro-calculator/">
+        <span>Armar mi plato con IA</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
     </div>
   </section>
 
@@ -699,17 +711,18 @@
   },{threshold:.2});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-  // el halo del CTA se dispara al asomar, una sola vez y luego se calma
-  const inviteCta = document.querySelector('.invite-cta');
-  if(inviteCta && !reduce){
+  // cada CTA naranja late tres veces al asomar y despues se calma.
+  // El del hero espera mas: si arranca a la vez que el video, compiten.
+  if(!reduce){
     const iio = new IntersectionObserver(es=>{
       es.forEach(e=>{
         if(!e.isIntersecting) return;
-        setTimeout(()=>inviteCta.classList.add('invita'), 500);  // deja terminar el reveal
+        const espera = e.target.classList.contains('hero-cta') ? 1200 : 500;
+        setTimeout(()=>e.target.classList.add('invita'), espera);
         iio.unobserve(e.target);
       });
     },{threshold:.6});
-    iio.observe(inviteCta);
+    document.querySelectorAll('.invite-cta').forEach(el=>iio.observe(el));
   }
 
   // ---------- barras tipo azulejo: construcción + control de llenado ----------
